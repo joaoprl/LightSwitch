@@ -11,7 +11,7 @@ TODO: add image describing the setup
 * [Python2.7]
 	* [pyalsaaudio](https://github.com/larsimmisch/pyalsaaudio/#installation)
 	* [hidapi] ([Cython](http://cython.org/#download), libusb and libudev on Linux)
-* Android 6.0 (Marshmallow or greater) or SDK
+* Android 4.0 (IceCreamSandwich or greater) or SDK
 
 ### Implemented
 * Smartphone switch button
