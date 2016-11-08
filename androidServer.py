@@ -22,7 +22,7 @@ class Server:
         while self.running:
             conn, addr = self.sock.accept()
 
-            print "connected to " + addr
+            print "connected to ", addr
             isConnected = True
 
             while(isConnected):
@@ -30,11 +30,11 @@ class Server:
                     buf = conn.recv(8)
 
                     if ord(buf[0]) == 1:
-                        relay.switch()
+                        self.relay.switch()
 
                 except(socket.error, IndexError):
                     isConnected = False
-                    print "disconnected from " + addr
+                    print "disconnected from ", addr
 
             if(isConnected):
                 conn.close()
