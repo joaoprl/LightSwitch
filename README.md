@@ -1,8 +1,7 @@
 # Light Switch
 This project uses [hidapi] to communicate with an usb-relay that is connected to a lamp.  
 
-### Objective
-To answer the question: "In how many ways can a programmer switch on a lightbulb?"
+In how many ways can a programmer switch on a lightbulb?
 
 ### Setup
 TODO: add image describing the setup
