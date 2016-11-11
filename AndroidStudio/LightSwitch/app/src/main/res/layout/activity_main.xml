@@ -17,4 +17,42 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/switchButton" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/ipText"
+        android:hint="IP address"
+        android:singleLine="true"
+        android:selectAllOnFocus="true"
+        android:digits="1234567890."
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/switchButton"
+        android:layout_centerHorizontal="true"
+        android:imeOptions="actionDone"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/portText"
+        android:hint="Port number"
+        android:singleLine="true"
+        android:digits="1234567890"
+        android:selectAllOnFocus="true"
+        android:layout_below="@+id/ipText"
+        android:layout_alignLeft="@+id/ipText"
+        android:layout_alignStart="@+id/ipText"
+        android:imeOptions="actionDone" />
+
+    <TextView
+        android:text="Disconnected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/switchButton"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/connectionStatus" />
 </RelativeLayout>
