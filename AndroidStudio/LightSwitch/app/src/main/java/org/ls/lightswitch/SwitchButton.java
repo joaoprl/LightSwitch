@@ -9,34 +9,13 @@ import android.widget.Button;
  */
 
 public class SwitchButton implements View.OnClickListener{
-    Boolean buttonFlag;
-    final Button button;
-    AppClient client;
-
-    public SwitchButton(Button button, AppClient client){
-        this.client = client;
-
-        this.buttonFlag = false;
-
-        this.button = button;
-        this.button.setBackgroundColor(Color.BLUE);
+    MainActivity activity;
+    public SwitchButton(MainActivity activity){
+        this.activity = activity;
     }
 
     @Override
     public void onClick(View v) {
-        System.out.println("click");
-
-        byte[] b = new byte[1];
-        b[0] = 1;
-        client.setData(b);
-
-        if(this.buttonFlag) {
-            this.button.setBackgroundColor(Color.BLUE);
-            this.buttonFlag = false;
-        }
-        else {
-            this.button.setBackgroundColor(Color.WHITE);
-            this.buttonFlag = true;
-        }
+        activity.switchButton();
     }
 }

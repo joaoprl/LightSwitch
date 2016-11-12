@@ -2,6 +2,7 @@ package org.ls.lightswitch;
 
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -9,10 +10,10 @@ import android.widget.TextView;
  */
 
 public class PortNumberListener implements TextView.OnEditorActionListener {
-    AppClient client;
+    MainActivity activity;
 
-    public PortNumberListener(AppClient client){
-        this.client = client;
+    public PortNumberListener(MainActivity activity){
+        this.activity = activity;
     }
 
     private int getPortNumber(String str){
@@ -32,7 +33,7 @@ public class PortNumberListener implements TextView.OnEditorActionListener {
             int port = getPortNumber(textView.getText().toString());
 
             if(port > 0)
-                client.setPortNumber(port);
+                activity.setPortNumber(port);
             else
                 textView.setError("Invalid port number");
         }

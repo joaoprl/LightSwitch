@@ -1,5 +1,6 @@
 package org.ls.lightswitch;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -11,9 +12,9 @@ import android.widget.TextView;
  */
 
 public class IpAddressListener implements TextView.OnEditorActionListener {
-    AppClient client;
-    public IpAddressListener(AppClient client){
-        this.client = client;
+    MainActivity activity;
+    public IpAddressListener(MainActivity activity){
+        this.activity = activity;
     }
 
     private boolean checkIpAddress(String str){
@@ -33,7 +34,7 @@ public class IpAddressListener implements TextView.OnEditorActionListener {
         if ((event != null && (event.getKeyCode() == event.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
 
             if(checkIpAddress(v.getText().toString()))
-                client.setIpAddress(v.getText().toString());
+                this.activity.setIpAddress(v.getText().toString());
             else
                 v.setError("Invalid IP address");
         }

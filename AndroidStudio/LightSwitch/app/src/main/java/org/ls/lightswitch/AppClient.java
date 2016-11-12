@@ -2,48 +2,53 @@ package org.ls.lightswitch;
 
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by debios on 11/5/16.
  */
 
 class AppClient extends AsyncTask<Void, Void, Void> {
+    final int retryMili = 2000;
+
     Socket socket;
     String host;
-    int port;
+    Integer port;
 
     Boolean hasData;
     byte[] data;
 
     Boolean isRunning;
 
-    Handler handler;
-    TextView connectionStatus;
+    MainActivity activity;
 
-    public AppClient(String host, int port, TextView connectionStatus, Handler handler) {
+    public AppClient(String host, int port, MainActivity activity) {
         this.host = host;
         this.port = port;
-        this.socket = null;
 
+        this.socket = null;
         this.hasData = false;
         this.data = null;
-
         this.isRunning = true;
 
-        this.connectionStatus = connectionStatus;
-        this.handler = handler;
+        this.activity = activity;
     }
 
     public void setData(byte[] b){
-        synchronized (this.hasData) {
-            this.data = b;
-            this.hasData = true;
+        if(this.isConnected()) {
+            synchronized (this.hasData) {
+                this.data = b;
+                this.hasData = true;
+            }
         }
     }
 
@@ -62,50 +67,53 @@ class AppClient extends AsyncTask<Void, Void, Void> {
     }
 
     public boolean isConnected(){
-        return this.socket != null && this.socket.isConnected();
+        return this.socket != null && this.socket.isConnected() && !this.socket.isClosed();
     }
 
-    private boolean postConnectionStatus(final String status){
-        return handler.post(new Runnable(){
-            public void run(){
-                connectionStatus.setText(status);
-            }
-        });
+    private void writeToSocket(byte[] bArray){
+        try {
+            this.socket.getOutputStream().write(bArray);
+        } catch (IOException e) {
+            System.out.println("Failed to write");
+            this.socket = null;
+        }
     }
 
     @Override
     protected Void doInBackground(Void ... voids) {
         while(this.isRunning) {
-            while(this.socket == null) {
+            while(!this.isConnected()) {
                 try {
                     this.socket = new Socket(host, port);
                     System.out.println("connected to " + host + " : " + port);
-                    postConnectionStatus("Connected");
+                    this.activity.setConnected(true);
 
                 } catch (IOException e) {
                     this.socket = null;
                     System.out.println("failed to connect");
-                    postConnectionStatus("Disconnected");
+                        this.activity.setConnected(false);
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(this.retryMili);
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
                 }
             }
-
+            Long tStart = System.currentTimeMillis();
             while (this.isConnected()) {
+
                 if (this.hasData) {
                     synchronized (this.hasData) {
-                        try {
-                            byte[] b = new byte[1];
-                            b[0] = 1;
-                            this.socket.getOutputStream().write(b);
-                        } catch (IOException e) {
-                            System.out.println("Failed to write");
-                        }
+                        this.writeToSocket(this.data);
                         this.hasData = false;
                     }
+                    tStart = System.currentTimeMillis();
+                }
+                else if(System.currentTimeMillis() - tStart > this.retryMili){
+                    byte[] b = new byte[1];
+                    b[0] = 0;
+                    this.writeToSocket(b);
+                    tStart = System.currentTimeMillis();
                 }
             }
         }
