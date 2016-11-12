@@ -1,11 +1,11 @@
 package org.ls.lightswitch;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.widget.Button;
@@ -16,7 +16,7 @@ import android.net.NetworkInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     Button button;
     EditText ipAddressText, portNumberText;
     TextView connectionStatusText;
