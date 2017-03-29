@@ -1,11 +1,6 @@
 # Light Switch
 This project uses [hidapi] to communicate with an usb-relay that is connected to a lamp.  
 
-In how many ways can a programmer switch on a lightbulb?
-
-### Setup
-TODO: add image describing the setup
-
 ### Software dependencies
 * [Python2.7]
 	* [pyalsaaudio](https://github.com/larsimmisch/pyalsaaudio/#installation)
@@ -20,9 +15,6 @@ TODO: add image describing the setup
 * Smartphone wakeup alarm
 * Current ambient light level
 * Movement detection
-
-### Contributing
-Suggestions are welcome. Please send a pull-request with new suggestions or implemented modules.
 
 ### Modules
 #### hidapi
